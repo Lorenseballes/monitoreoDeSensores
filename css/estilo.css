@@ -36,6 +36,20 @@ nav ul li a:hover, .activo {
   border-radius: 5px;
 }
 
+/* Logo en el header */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 30px;
+}
+
+.logo img {
+  height: 50px; /* tamaño del logo */
+  width: auto;
+}
+
+
 /* Banner */
 .banner {
   position: relative;
@@ -185,4 +199,17 @@ footer {
 .integrante p {
   color: #555;
   font-size: 0.95em;
+}
+
+/* Secciones de Avances */
+.contenido {
+  margin-bottom: 40px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-left: 5px solid #073452;
+  border-radius: 8px;
+}
+
+.contenido h2 {
+  margin-bottom: 10px;
 }
