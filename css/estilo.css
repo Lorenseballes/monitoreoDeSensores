@@ -202,17 +202,62 @@ footer {
 }
 
 /* Secciones de Avances */
-.contenido {
-  margin-bottom: 40px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-left: 5px solid #073452;
-  border-radius: 8px;
+/* Avances */
+.avances-semanales {
+  text-align: center;
+  margin: 40px auto;
+  max-width: 1000px;
 }
 
-.contenido h2 {
-  margin-bottom: 10px;
+.avances-semanales h2 {
+  color: #073452;
+  margin-bottom: 30px;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
+
+.semanas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.semana-card {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-left: 8px solid #073452;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.semana-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.semana-card h3 {
+  color: #073452;
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.semana-card h3 span {
+  font-size: 14px;
+  color: #555;
+  font-weight: normal;
+}
+
+.semana-card p {
+  margin-bottom: 10px;
+  color: #333;
+  line-height: 1.5;
+}
+
 
 /* Lista de materiales */
 .materiales h2 {
