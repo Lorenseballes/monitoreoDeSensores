@@ -260,35 +260,90 @@ footer {
 
 
 /* Lista de materiales */
-.materiales h2 {
+.contenidoMateriales h2 {
   text-align: center;
   color: #073452;
   margin-bottom: 20px;
 }
 
-.material-lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+/* Estilo general de la sección */
+.contenido.materiales {
   padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
 }
 
-.material-item {
-  background: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
+/* Título */
+.contenido.materiales h2 {
   text-align: center;
-  transition: transform 0.2s ease-in-out;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
 }
 
-.material-item img {
-  max-width: 120px;
-  height: auto;
-  margin-bottom: 10px;
+/* Lista de materiales */
+.material-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center; 
+}
+
+/* Cada material */
+.material-item {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  gap: 15px;
+  max-width: 600px;        
+  width: 100%; 
+}
+/* Efecto hover en las tarjetas */
+.material-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .material-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transform: scale(1.03);  /* Agranda un poco la tarjeta */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
 }
+
+
+/* Imagen */
+.material-item img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Texto */
+.material-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.material-info p {
+  margin-top: 5px;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .material-item {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .material-item img {
+    width: 80px;
+  }
+}
+
