@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avances del Proyecto</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body>
+  <!-- Header con logo y menú -->
+  <header id="inicio">
+    <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="image/logo2.png" alt="Logo del Proyecto">
+        </a>
+      </div>
+      <ul>
+        <li><a href="index.html" class="activo">Inicio</a></li>
+
+        <!-- Menú desplegable Avances -->
+        <li class="submenu">
+          <a href="avances.html">Avances</a>
+          <ul class="submenu-opciones">
+            <li><a href="avances1.html">Avance 1</a></li>
+            <li><a href="avances2.html">Avance 2</a></li>
+            <li><a href="avances3.html">Avance 3</a></li>
+          </ul>
+        </li>
+
+        <li><a href="equipo.html">Equipo</a></li>
+        <li><a href="documentacion.html">Documentación Técnica</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <img src="image/Servidor..png" alt="Banner avances del proyecto">
+    <h1>Avances</h1>
+  </section>
+  <!-- Sección de avances -->
+  <section class="contenedor-avances">
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Avance 1</h3>
+        <p>En este avance se definieron los objetivos principales del proyecto,
+          se eligieron los sensores y se realizaron pruebas iniciales de conexión.</p>
+      </div>
+      <div class="imagen">
+        <img src="image/avance1.jpg" alt="Imagen Avance 1">
+      </div>
+    </div>
+      <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Avance 2</h3>
+        <p>Se implementó la lectura de temperatura en tiempo real,
+          corrigiendo errores de conexión con el ESP32.</p>
+      </div>
+      <div class="imagen">
+        <img src="image/avance2.jpg" alt="Imagen Avance 2">
+      </div>
+    </div>
+
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Avance 3</h3>
+        <p>Se integró el sistema de alertas con Telegram,
+          logrando notificaciones automáticas al superar el umbral de temperatura.</p>
+      </div>
+      <div class="imagen">
+        <img src="image/avance3.jpg" alt="Imagen Avance 3">
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
+    <p>&copy; 2025 Proyecto Académico</p>
+  </footer>
+</body>
+
+</html>

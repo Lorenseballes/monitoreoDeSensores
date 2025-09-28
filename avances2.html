@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avances del Proyecto</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body>
+  <!-- Header con logo y menú -->
+  <header id="inicio">
+    <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="image/logo2.png" alt="Logo del Proyecto">
+        </a>
+      </div>
+      <ul>
+        <li><a href="index.html" class="activo">Inicio</a></li>
+
+        <!-- Menú desplegable Avances -->
+        <li class="submenu">
+          <a href="avances.html">Avances</a>
+          <ul class="submenu-opciones">
+            <li><a href="avances1.html">Avance 1</a></li>
+            <li><a href="avances2.html">Avance 2</a></li>
+            <li><a href="avances3.html">Avance 3</a></li>
+          </ul>
+        </li>
+
+        <li><a href="equipo.html">Equipo</a></li>
+        <li><a href="documentacion.html">Documentación Técnica</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <img src="image/Servidor..png" alt="Banner avances del proyecto">
+    <h1>Avances</h1>
+  </section>
+  <!-- Sección de avances -->
+  <section class="contenedor-avances">
+    <h2>Avances por Semana</h2>
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 4 <span>(05/09 – 11/09)</span></h3>
+        <p>Durante esta semana el grupo recibió la devolución del profesor sobre el avance presentado anteriormente. A
+          partir de sus comentarios fue posible mejorar la documentación y corregir los aspectos señalados, lo que
+          aportó mayor coherencia y solidez al proyecto, sentando bases más firmes para las siguientes etapas.
+          En el plano técnico se resolvió un error que aparecía al momento de conectar el ESP32 al Arduino IDE. Dicho
+          problema estaba relacionado con Python y pudo solucionarse gracias a la información obtenida en foros. Una vez
+          resuelto, se probó un código de verificación en el ESP32, el cual funcionó correctamente.
+          Además, se descargó la librería correspondiente al sensor DHT11 en Arduino IDE y se procedió a realizar el
+          cableado inicial utilizando los cables proporcionados por el profesor. Con este montaje se intentó poner en
+          funcionamiento el sensor de temperatura, aunque apareció el mensaje de error “error 253 Reading from DHT11
+          timed out”,
+          el cual suele estar asociado a problemas de conexión en el cableado o a inconvenientes en la alimentación.</p>
+      </div>
+      <div class="imagen">
+        <img src="image/Código de prueba con LED.png" alt="Imagen prueba con LED">
+        <p class="titulo-imagen">Primera prueba con LED</p>
+      </div>
+    </div>
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 5 <span>(12/09 – 18/09)</span></h3>
+        <p>
+          Se realizó el cableado en protoboard del ESP32 con el sensor DHT11,
+          y se configuró el entorno de Arduino IDE para obtener lecturas correctas
+          de temperatura y humedad. A continuación, se detallan los puntos trabajados:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Esquema de conexión DHT11 – ESP32:</strong>
+            VCC → 3.3 V (o 5 V según módulo), DATA → GPIO 4, GND → GND.
+          </li>
+          <li>
+            <strong>Configuraciones en Arduino IDE:</strong>
+            Instalación de las librerías <em>DHT sensor library</em> (Adafruit) y
+            <em>Adafruit Unified Sensor</em>.
+            Se seleccionó la placa <em>ESP32 Dev Module</em> (Espressif Systems)
+            y se configuró correctamente el puerto COM.
+          </li> <br>
+          <p><strong>Código para leer temperatura y humedad:</strong></p>
+          <pre><code>
+#include "DHT.h"
+
+// 📌 CONFIGURACIÓN DEL PIN Y SENSOR
+#define DHTPIN 4      // Pin donde está conectado DATA del DHT11
+#define DHTTYPE DHT11 // Tipo de sensor
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Iniciando lectura del sensor DHT11...");
+  dht.begin();
+}
+
+void loop() {
+  // 📌 Leemos los valores del sensor
+  float humedad = dht.readHumidity();
+  float temperatura = dht.readTemperature();
+
+  // Verificamos si hubo error de lectura
+  if (isnan(humedad) || isnan(temperatura)) {
+    Serial.println("❌ Error al leer del DHT11. Revisar conexiones.");
+    delay(2000);
+    return;
+  }
+
+  // 📌 Mostramos datos por Monitor Serial
+  Serial.print("🌡️  Temperatura: ");
+  Serial.print(temperatura);
+  Serial.print(" °C  |  💧 Humedad: ");
+  Serial.print(humedad);
+  Serial.println(" %");
+
+  delay(2000); // Espera 2 segundos antes de la próxima lectura
+}
+</code></pre> <br>
+          <li>
+            <strong>Resultado:</strong>
+            El sistema mostró lecturas de temperatura y humedad en el Monitor Serial cada 2 segundos.
+          </li>
+          <li>
+            <strong>Siguiente paso:</strong>
+            Integrar la pantalla OLED para mostrar los datos del sensor.
+          </li>
+          <li>
+            <strong>Esquema de conexión OLED – ESP32:</strong>
+            VCC → 3.3 V, GND → GND, SDA → GPIO 21, SCL → GPIO 22.
+          </li>
+          <li>
+            <strong>Librerías necesarias para la OLED:</strong>
+            <em>Adafruit SSD1306</em> y <em>Adafruit GFX Library</em>.
+          </li>
+        </ul><br>
+        <p><strong>Código de prueba para la pantalla OLED:</strong></p>
+        <pre><code>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define ANCHO 128
+#define ALTO 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(ANCHO, ALTO, &Wire, OLED_RESET);
+
+void setup() {
+  Serial.begin(115200);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("❌ Pantalla OLED no encontrada.");
+    for (;;);
+  }
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 25);
+  display.println("OLED OK!");
+  display.display();
+}
+
+void loop() {}
+</code></pre><br>
+        <p>El código se cargó, pero la pantalla no mostró nada, lo que indicó un posible problema en conexiones o
+          compatibilidad.</p>
+      </div>
+    </div>
+
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 6 <span>(19/09 – 25/09)</span></h3>
+        <p>Durante esta semana, dos integrantes del grupo continuaron con las pruebas del ESP32 y la pantalla OLED.
+        Se procedió a reinstalar el entorno de desarrollo Arduino IDE y a configurar nuevamente la placa ESP32 en una computadora que no estaba previamente preparada para este trabajo.
+        A continuación, se realizaron distintas pruebas utilizando códigos básicos de verificación con el objetivo de validar el funcionamiento de la pantalla OLED.
+        Si bien la configuración del entorno se completó de manera correcta, la pantalla no respondió y no mostró ninguna visualización.
+        Este inconveniente fue identificado como la principal dificultad técnica de la semana. Se definió como siguiente paso continuar investigando posibles soluciones y realizar nuevas pruebas en los próximos encuentros.</p>
+      </div>
+      <div class="imagen">
+        <img src="image/avance3.jpg" alt="Imagen Avance 3">
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
+    <p>&copy; 2025 Proyecto Académico</p>
+  </footer>
+</body>
+
+</html>

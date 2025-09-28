@@ -13,17 +13,23 @@ body {
 }
 
 /* Menú */
+
 header {
   background: #073452; /* Azul profundo */
+  position: relative; /* Necesario para usar z-index */
+  z-index: 10;        /* El header queda por encima del banner */
 }
 nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
 }
+
 nav ul li {
   margin: 0 15px;
+  position: relative; /* Necesario para el submenú */
 }
+
 nav ul li a {
   color: #fff;
   text-decoration: none;
@@ -31,10 +37,47 @@ nav ul li a {
   display: block;
   font-weight: bold;
 }
-nav ul li a:hover, .activo {
+
+nav ul li a:hover,
+.activo {
   background: #0a4b70; /* Azul un poco más claro al pasar el mouse */
   border-radius: 5px;
 }
+
+/* SUBMENÚ */
+.submenu-opciones {
+  display: none;
+  position: absolute;
+  top: 100%; /* Justo debajo del menú principal */
+  left: 0;
+  background: #073452;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+  min-width: 160px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.submenu-opciones li {
+  margin: 0; /* Quita margen para que quede compacto */
+}
+
+.submenu-opciones li a {
+  padding: 12px 15px;
+  font-weight: normal;
+}
+
+.submenu-opciones li a:hover {
+  background: #0a4b70;
+  border-radius: 0; /* Los submenús no llevan borde redondeado en hover */
+}
+
+/* Mostrar submenú al pasar el mouse */
+.submenu:hover .submenu-opciones {
+  display: block;
+}
+
 
 /* Logo en el header */
 nav {
@@ -53,6 +96,7 @@ nav {
 /* Banner */
 .banner {
   position: relative;
+  z-index: 1; /* El banner queda por debajo */
   text-align: center;
 }
 .banner img {
@@ -203,19 +247,12 @@ footer {
 
 /* Secciones de Avances */
 /* Avances */
-.avances-semanales {
+/*.avances-semanales {
   text-align: center;
   margin: 40px auto;
   max-width: 1000px;
 }
 
-.avances-semanales h2 {
-  color: #073452;
-  margin-bottom: 30px;
-  font-size: 28px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
 
 .semanas {
   display: grid;
@@ -256,6 +293,84 @@ footer {
   margin-bottom: 10px;
   color: #333;
   line-height: 1.5;
+}*/
+
+
+/* Contenedor general de avances */
+.contenedor-avances {
+  max-width: 900px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Espacio entre tarjetas */
+  padding: 0 15px;
+}
+.contenedor-avances h2 {
+  color: #073452;
+  margin-bottom: 30px;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+/* Tarjeta individual */
+.tarjeta-avance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover en la tarjeta */
+.tarjeta-avance:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 14px rgba(0,0,0,0.3);
+}
+
+.tarjeta-avance:hover .imagen img {
+  transform: scale(1.05);
+}
+
+/* Título debajo de la imagen */
+.tarjeta-avance .imagen .titulo-imagen {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #073452;
+  font-weight: bold;
+  }
+
+/* Texto a la izquierda */
+.tarjeta-avance .texto {
+  flex: 1;
+  text-align: left;
+}
+
+.tarjeta-avance .texto h3 {
+  color: #073452;
+  margin-bottom: 10px;
+}
+
+.tarjeta-avance .texto p {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Imagen a la derecha */
+.tarjeta-avance .imagen {
+  flex: 1;
+  text-align: center;
+}
+
+
+.tarjeta-avance .imagen img {
+  max-width: 350px;   /* antes era 200px */
+  width: 100%;        /* se adapta al espacio disponible */
+  border-radius: 8px;
+  transition: transform 0.3s ease;
 }
 
 

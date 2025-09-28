@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avances del Proyecto</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <!-- Header con logo y menú -->
+  <header id="inicio">
+  <nav>
+    <div class="logo">
+      <a href="index.html">
+        <img src="image/logo2.png" alt="Logo del Proyecto">
+      </a>
+    </div>
+    <ul>
+      <li><a href="index.html" class="activo">Inicio</a></li>
+
+      <!-- Menú desplegable Avances -->
+      <li class="submenu">
+        <a href="avances.html">Avances</a>
+        <ul class="submenu-opciones">
+          <li><a href="avances1.html">Avance 1</a></li>
+          <li><a href="avances2.html">Avance 2</a></li>
+          <li><a href="avances3.html">Avance 3</a></li>
+        </ul>
+      </li>
+
+      <li><a href="equipo.html">Equipo</a></li>
+      <li><a href="documentacion.html">Documentación Técnica</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <img src="image/Servidor..png" alt="Banner avances del proyecto">
+    <h1>Avances</h1>
+  </section>
+<!-- Sección de avances -->
+  <section class="contenedor-avances">
+    <h2>Avances por Semana</h2>
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 1 <span>(15/08 – 21/08)</span></h3>
+        <p>Durante esta primera semana se realizó la puesta en marcha del proyecto, comenzando por la definición de los objetivos principales y el alcance esperado.
+      Se procedió a la selección del hardware base, optando por el microcontrolador ESP32 como unidad central y el sensor de temperatura DS18B20 para las primeras pruebas de captura de datos.
+      Finalmente, se llevó a cabo una prueba inicial de lectura de temperatura, confirmando la correcta comunicación entre el sensor y el microcontrolador.</p>
+      </div>
+    </div>
+      <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 2 <span>(22/08 – 28/08)</span></h3>
+      <p>En esta etapa se abordó la construcción de la interfaz web.
+          Se exploraron distintas alternativas de desarrollo, evaluando el uso de Google Sites y WordPress. Sin embargo, tras analizar sus limitaciones, se decidió implementar la página de forma 
+          manual con HTML y CSS, lo que brinda mayor flexibilidad para la integración futura de datos. <br>
+          Definición de la estructura inicial para mostrar los datos del sensor.</p>
+      </div>
+    </div>
+
+    <div class="tarjeta-avance">
+      <div class="texto">
+          <h3>Semana 3 <span>(29/08 – 04/09)</span></h3>
+      <p>Compra de materiales: ESP32 USB-C, DHT11, pantalla OLED 0.96", protoboard 400 puntos.
+      Recepción de jumpers proporcionados por el profesor.
+      Finalización de la página web lista para recibir e integrar datos del sensor.
+      Instalación del Arduino IDE para programar el ESP32.
+      Preparación del prototipo para integrar sensor, pantalla OLED y envío de datos.
+      Problemas iniciales al reconocer el ESP32 en Arduino IDE, se probaron diferentes configuraciones.
+    Entrega del primer avance al profesor: prototipo, página web y plan de trabajo.</p>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
+    <p>&copy; 2025 Proyecto Académico</p>
+  </footer>
+</body>
+</html>
+

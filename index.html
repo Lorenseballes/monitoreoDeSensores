@@ -9,22 +9,31 @@
 </head>
 <body>
   <!-- Encabezado con menú -->
-  <header  id="inicio">
-    <nav>
-      <div class="logo">
-        <a href="index.html">
+<header id="inicio">
+  <nav>
+    <div class="logo">
+      <a href="index.html">
         <img src="image/logo2.png" alt="Logo del Proyecto">
       </a>
     </div>
-      <ul>
-        <li><a href="index.html" class="activo">Inicio</a></li>
-        <li><a href="avances.html">Avances</a></li>
-        <li><a href="equipo.html">Equipo</a></li>
-        <li><a href="documentacion.html">Documentación Técnica</a></li>
-      </ul>
-    </nav>
-  </header>
+    <ul>
+      <li><a href="index.html" class="activo">Inicio</a></li>
 
+      <!-- Menú desplegable Avances -->
+      <li class="submenu">
+        <a href="avances.html">Avances</a>
+        <ul class="submenu-opciones">
+          <li><a href="avances1.html">Avance 1</a></li>
+          <li><a href="avances2.html">Avance 2</a></li>
+          <li><a href="avances3.html">Avance 3</a></li>
+        </ul>
+      </li>
+
+      <li><a href="equipo.html">Equipo</a></li>
+      <li><a href="documentacion.html">Documentación Técnica</a></li>
+    </ul>
+  </nav>
+</header>
   <!-- Banner -->
   <section class="banner">
     <img src="image/servidor2.jpg" alt="Banner del proyecto">
@@ -44,15 +53,53 @@
 
   </section>
 
-  <!-- Materiales 
-  <section class="materiales">
-    <h2>Materiales</h2>
-    <div class="galeria">
-      <img src="material1.jpg" alt="Material 1">
-      <img src="material2.jpg" alt="Material 2">
-      <img src="material3.jpg" alt="Material 3">
+  <!-- Lista de materiales -->
+  <section class="contenidoMateriales">
+  <h2>Lista de Materiales</h2>
+  <div class="material-lista">
+
+    <div class="material-item">
+      <img src="image/arduinoESP32.jpeg" alt="Arduino ESP32">
+      <div class="material-info">
+        <h3>Arduino ESP32</h3>
+        <p>Microcontrolador con conexión WiFi y Bluetooth, ideal para proyectos IoT y procesamiento de datos en tiempo real.</p>
+      </div>
     </div>
-  </section>-->
+
+    <div class="material-item">
+      <img src="image/bateria.jpeg" alt="Fuente de energía">
+      <div class="material-info">
+        <h3>Fuente de energía</h3>
+        <p>Dispositivo encargado de suministrar la energía necesaria para el funcionamiento del circuito y sus componentes.</p>
+      </div>
+    </div>
+
+    <div class="material-item">
+      <img src="image/pantallaLed.jpeg" alt="Pantalla LED">
+      <div class="material-info">
+        <h3>Pantalla LED</h3>
+        <p>Permite mostrar información como la temperatura, humedad o mensajes de estado en tiempo real.</p>
+      </div>
+    </div>
+
+    <div class="material-item">
+      <img src="image/protoboard.jpeg" alt="Protoboard">
+      <div class="material-info">
+        <h3>Protoboard</h3>
+        <p>Tablero de pruebas que facilita el montaje de circuitos sin necesidad de soldadura.</p>
+      </div>
+    </div>
+
+    <div class="material-item">
+      <img src="image/sensor.jpeg" alt="Sensor DHT11">
+      <div class="material-info">
+        <h3>Sensor DHT11</h3>
+        <p>Sensor digital que mide temperatura y humedad, enviando los datos al microcontrolador para su procesamiento.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
   <!-- Footer -->
   <footer>
