@@ -57,18 +57,24 @@
           cableado inicial utilizando los cables proporcionados por el profesor. Con este montaje se intentó poner en
           funcionamiento el sensor de temperatura, aunque apareció el mensaje de error “error 253 Reading from DHT11
           timed out”,
-          el cual suele estar asociado a problemas de conexión en el cableado o a inconvenientes en la alimentación.</p>
-      </div>
-      <div class="imagen">
-        <img src="image/Código de prueba con LED.png" alt="Imagen prueba con LED">
-        <p class="titulo-imagen">Primera prueba con LED</p>
-      </div>
-    </div>
-    <div class="tarjeta-avance">
-      <div class="texto">
-        <h3>Semana 5 <span>(12/09 – 18/09)</span></h3>
-        <p>
-          Se realizó el cableado en protoboard del ESP32 con el sensor DHT11,
+          el cual suele estar asociado a problemas de conexión en el cableado o a inconvenientes en la alimentación.</p><br>
+          <pre><code>
+#define LED 2
+
+void setup() {
+  // Configuración del pin como salida
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  delay(50);
+  digitalWrite(LED, HIGH);
+  delay(50);
+  digitalWrite(LED, LOW);
+}
+</code></pre><br>
+          <p>
+          Se realizó también el cableado en protoboard del ESP32 con el sensor DHT11,
           y se configuró el entorno de Arduino IDE para obtener lecturas correctas
           de temperatura y humedad. A continuación, se detallan los puntos trabajados:
         </p>
@@ -171,18 +177,149 @@ void loop() {}
           compatibilidad.</p>
       </div>
     </div>
-
     <div class="tarjeta-avance">
       <div class="texto">
-        <h3>Semana 6 <span>(19/09 – 25/09)</span></h3>
+        <h3>Semana 5 <span>(12/09 – 18/09)</span></h3>
         <p>Durante esta semana, dos integrantes del grupo continuaron con las pruebas del ESP32 y la pantalla OLED.
         Se procedió a reinstalar el entorno de desarrollo Arduino IDE y a configurar nuevamente la placa ESP32 en una computadora que no estaba previamente preparada para este trabajo.
         A continuación, se realizaron distintas pruebas utilizando códigos básicos de verificación con el objetivo de validar el funcionamiento de la pantalla OLED.
         Si bien la configuración del entorno se completó de manera correcta, la pantalla no respondió y no mostró ninguna visualización.
         Este inconveniente fue identificado como la principal dificultad técnica de la semana. Se definió como siguiente paso continuar investigando posibles soluciones y realizar nuevas pruebas en los próximos encuentros.</p>
       </div>
-      <div class="imagen">
-        <img src="image/avance3.jpg" alt="Imagen Avance 3">
+    </div>
+
+    <div class="tarjeta-avance">
+      <div class="texto">
+        <h3>Semana 6 <span>(19/09 – 26/09)</span></h3>
+        <p>
+  Durante esta semana participaron todos los integrantes del equipo y el trabajo volvió a centrarse en la pantalla OLED, que hasta el momento no había podido ser utilizada con éxito. 
+  Se realizaron nuevas pruebas modificando completamente el cableado para descartar errores de conexión y, con el apoyo del docente, se probó un nuevo código de verificación adaptado al ESP32. 
+  A pesar de los ajustes y esfuerzos realizados, la pantalla continuó sin mostrar resultados, por lo que el problema permanecía como un desafío técnico pendiente.
+</p>
+
+<p>
+  Paralelamente, el grupo avanzó en la actualización de la página web correspondiente al segundo informe. 
+  En esta etapa se agregaron nuevas secciones y se reorganizó la estructura de los contenidos, incorporando páginas específicas para cada entrega de avances 
+  (Avance 1, Avance 2 y Avance 3), con el fin de presentar de manera más clara el progreso del proyecto.
+</p>
+
+<p>
+  Finalmente, para descartar la posibilidad de que la pantalla OLED estuviera dañada, el equipo inició pruebas de funcionamiento utilizando una placa micro:bit. 
+  En este proceso se descubrió que el inconveniente se debía a un error de cableado, ya que se habían conectado únicamente 4 pines en lugar de los 7 requeridos. 
+  Una vez corregida la conexión, la pantalla logró encenderse y responder adecuadamente, confirmando que el dispositivo se encontraba en buen estado.
+</p><br>
+<h3>Prueba de pantalla OLED 0.96 en Micro:bit</h3>
+  <p>
+    Debido a las dificultades para hacer funcionar la pantalla OLED en el ESP32, el grupo decidió utilizar un <strong>Micro:bit</strong> como alternativa de prueba. 
+    Para conectarla correctamente, fue necesario emplear un adaptador que permitiera acceder a todos los pines necesarios.
+  </p>
+  <p>
+    En la primera prueba la pantalla tampoco funcionó, pero al investigar se descubrió que el modelo utilizado era una 
+    <strong>OLED 0.96" 128×64 de 7 pines, interfaz SPI</strong>. Esta información fue clave para comprender que se necesitaba la conexión de los 7 pines de la pantalla. 
+    Una vez realizada la conexión completa, se procedió a probar un código en Python y la pantalla logró encenderse, mostrando una carita sonriente.
+  </p><br>
+  
+  <h4>Código en Python para Micro:bit</h4>
+  <pre><code>
+# micro:bit + OLED 0.96" SPI (128x64) - Carita :)
+# Funciona con SSD1306 o SH1106 (cambiando CONTROLLER).
+# Pines:
+#  SCK  -> P13
+#  MOSI -> P15
+#  DC   -> P8
+#  CS   -> P16
+#  RST  -> P12
+from microbit import *
+import utime
+
+CONTROLLER = 'SSD1306'  # ó 'SH1106'
+W, H = 128, 64
+COL_OFFSET = 2
+
+PIN_SCK  = pin13
+PIN_MOSI = pin15
+PIN_DC   = pin8
+PIN_CS   = pin16
+PIN_RST  = pin12
+
+# Configuración SPI
+spi.init(baudrate=8_000_000, mode=0, sclk=PIN_SCK, mosi=PIN_MOSI)
+
+def cs(active): PIN_CS.write_digital(0 if active else 1)
+def dc(is_data): PIN_DC.write_digital(1 if is_data else 0)
+def rst_pulse():
+    PIN_RST.write_digital(0); utime.sleep_ms(10)
+    PIN_RST.write_digital(1); utime.sleep_ms(10)
+
+# Inicialización y funciones de dibujo (ssd1306_init, sh1106_init, pixel, circle, etc.)
+# ...
+
+# === DIBUJAR CARITA ===
+init_display()
+clear()
+for t in range(0, 3): circle(64, 32, 28 - t, 1)  # contorno cara
+fill_circle(48, 26, 3, 1)  # ojo izquierdo
+fill_circle(80, 26, 3, 1)  # ojo derecho
+arc_lower(64, 40, 18, thick=2, c=1)  # sonrisa
+hline(42, 18, 12, 1)  # ceja izquierda
+hline(74, 18, 12, 1)  # ceja derecha
+show()
+  </code></pre><br>
+  <h3>Prueba de Pantalla OLED 0.96" 128×64 (7 pines i2C/SPI) en ESP32</h3>
+
+  <p>
+    Una vez que comprobamos que la pantalla funcionaba y que teníamos la nueva información del modelo, 
+    procedimos a intentar levantarla en el ESP32, esta vez utilizando los 7 pines. 
+    Para la conexión de la pantalla al ESP32 fue necesario emplear una protoboard y 7 cables macho–macho. 
+  </p>
+
+  <p>
+    En esta oportunidad logramos que funcionara de primera instancia con el siguiente código, 
+    utilizando <strong>Arduino IDE 2.3.6</strong>.  
+    El ejemplo resultó más breve, ya que las librerías incluidas en las primeras líneas reducen 
+    significativamente la cantidad de código requerida.  
+    Para la prueba, generamos un sketch en ChatGPT que mostrara el mensaje <em>“HOLA!”</em>.
+  </p>
+
+  <h3>Código utilizado en Arduino IDE</h3>
+  <pre><code>
+#include &lt;SPI.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// Pines cableados:
+#define OLED_SCK   18
+#define OLED_MOSI  23
+#define OLED_DC    19
+#define OLED_CS     5
+#define OLED_RST   22
+
+// Constructor SPI: orden = (&SPI, DC, RST, CS)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RST, OLED_CS);
+
+void setup() {
+  Serial.begin(115200);
+
+  // Asegurá los pines de VSPI del ESP32:
+  SPI.begin(OLED_SCK, /*MISO*/ 19, OLED_MOSI, OLED_CS);
+
+  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
+    Serial.println("SSD1306 no encontrado (SPI).");
+    while (true);
+  }
+
+  display.clearDisplay();
+  display.drawRect(0, 0, 128, 64, SSD1306_WHITE);
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 24);
+  display.println("Hola!");
+  display.display();
+}
+  </code></pre> <br>
       </div>
     </div>
   </section>
