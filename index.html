@@ -54,57 +54,78 @@
   </section>
 
   <!-- Lista de materiales -->
-  <section class="contenidoMateriales">
-  <h2>Lista de Materiales</h2>
-  <div class="material-lista">
-
-    <div class="material-item">
-      <img src="image/arduinoESP32.jpeg" alt="Arduino ESP32">
-      <div class="material-info">
+  <section class="galeria-materiales">
+    <h2>Lista de Materiales</h2>
+    <div class="grid-materiales">
+      <div class="item-material">
+        <img src="image/arduinoESP32.jpeg" alt="Arduino ESP32" onclick="abrirModal(this)">
         <h3>Arduino ESP32</h3>
         <p>Microcontrolador con conexión WiFi y Bluetooth, ideal para proyectos IoT y procesamiento de datos en tiempo real.</p>
       </div>
-    </div>
 
-    <div class="material-item">
-      <img src="image/bateria.jpeg" alt="Fuente de energía">
-      <div class="material-info">
+      <div class="item-material">
+        <img src="image/bateria.jpeg" alt="Fuente de energía" onclick="abrirModal(this)">
         <h3>Fuente de energía</h3>
         <p>Dispositivo encargado de suministrar la energía necesaria para el funcionamiento del circuito y sus componentes.</p>
       </div>
-    </div>
 
-    <div class="material-item">
-      <img src="image/pantallaLed.jpeg" alt="Pantalla LED">
-      <div class="material-info">
+      <div class="item-material">
+        <img src="image/pantallaLed.jpeg" alt="Pantalla LED" onclick="abrirModal(this)">
         <h3>Pantalla LED</h3>
         <p>Permite mostrar información como la temperatura, humedad o mensajes de estado en tiempo real.</p>
       </div>
-    </div>
 
-    <div class="material-item">
-      <img src="image/protoboard.jpeg" alt="Protoboard">
-      <div class="material-info">
+      <div class="item-material">
+        <img src="image/protoboard.jpeg" alt="Protoboard" onclick="abrirModal(this)">
         <h3>Protoboard</h3>
         <p>Tablero de pruebas que facilita el montaje de circuitos sin necesidad de soldadura.</p>
       </div>
-    </div>
 
-    <div class="material-item">
-      <img src="image/sensor.jpeg" alt="Sensor DHT11">
-      <div class="material-info">
+      <div class="item-material">
+        <img src="image/sensor.jpeg" alt="Sensor DHT11" onclick="abrirModal(this)">
         <h3>Sensor DHT11</h3>
         <p>Sensor digital que mide temperatura y humedad, enviando los datos al microcontrolador para su procesamiento.</p>
       </div>
     </div>
+  </section>
 
+  <!-- Modal para ver imágenes en grande -->
+  <div id="modal-imagen" class="modal" onclick="cerrarModal()">
+    <span class="cerrar">&times;</span>
+    <img class="modal-contenido" id="imagen-modal">
+    <div class="caption" id="caption"></div>
   </div>
-</section>
 
   <!-- Footer -->
   <footer>
     <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
     <p>&copy; 2025 Proyecto Académico</p>
   </footer>
+
+  <script>
+    // Función para abrir el modal con la imagen
+    function abrirModal(elemento) {
+      const modal = document.getElementById('modal-imagen');
+      const modalImg = document.getElementById('imagen-modal');
+      const caption = document.getElementById('caption');
+      
+      modal.style.display = 'block';
+      modalImg.src = elemento.src;
+      caption.innerHTML = elemento.alt;
+    }
+
+    // Función para cerrar el modal
+    function cerrarModal() {
+      const modal = document.getElementById('modal-imagen');
+      modal.style.display = 'none';
+    }
+
+    // Cerrar modal al presionar Escape
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        cerrarModal();
+      }
+    });
+  </script>
 </body>
 </html>
