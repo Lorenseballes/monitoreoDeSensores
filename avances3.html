@@ -188,8 +188,8 @@ const char* ssid     = "Ceibal-2.4GHz";
 const char* password = "";
 
 // ---------- TELEGRAM ----------
-String botToken = "8421682878:AAEq2uzHKsqD8j_M9_9O2wNVxgdP-vrIeP0";
-String chatID   = "6711269098";
+String botToken = "";
+String chatID   = "";
 
 // ---------- DHT ----------
 #define DHTPIN 4
@@ -249,7 +249,7 @@ void enviarTelegram(const String& msg) {
   HTTPClient http;
   String safe = msg; safe.replace(" ", "%20");
   String url = "https://api.telegram.org/bot" + botToken +
-               "/sendMessage?chat_id=" + chatID + "&text=" + safe;
+              "/sendMessage?chat_id=" + chatID + "&text=" + safe;
 
   if (http.begin(url)) {
     int code = http.GET();
