@@ -43,43 +43,423 @@
   </section>
   <!-- Sección de avances -->
   <section class="contenedor-avances">
-    <div class="tarjeta-avance">
-      <div class="texto">
-        <h3>Avance 1</h3>
-        <p>En este avance se definieron los objetivos principales del proyecto,
-          se eligieron los sensores y se realizaron pruebas iniciales de conexión.</p>
-      </div>
-      <div class="imagen">
-        <img src="image/avance1.jpg" alt="Imagen Avance 1">
-      </div>
-    </div>
-      <div class="tarjeta-avance">
-      <div class="texto">
-        <h3>Avance 2</h3>
-        <p>Se implementó la lectura de temperatura en tiempo real,
-          corrigiendo errores de conexión con el ESP32.</p>
-      </div>
-      <div class="imagen">
-        <img src="image/avance2.jpg" alt="Imagen Avance 2">
-      </div>
-    </div>
+    <p>
+    Durante este período, el equipo continuó trabajando en la integración del sensor de temperatura y humedad 
+    <strong>DHT11</strong>, la pantalla <strong>OLED 0.96"</strong> y el microcontrolador <strong>ESP32</strong>, 
+    avanzando significativamente en el desarrollo del sistema.
+  </p>
 
-    <div class="tarjeta-avance">
-      <div class="texto">
-        <h3>Avance 3</h3>
-        <p>Se integró el sistema de alertas con Telegram,
-          logrando notificaciones automáticas al superar el umbral de temperatura.</p>
-      </div>
-      <div class="imagen">
-        <img src="image/avance3.jpg" alt="Imagen Avance 3">
+  <p>
+    En primer lugar, se logró ejecutar correctamente el código en el entorno <strong>Arduino IDE</strong> sin presentar 
+    errores de compilación, lo que permitió avanzar en el área de programación del sensor y la pantalla OLED.
+  </p>
+
+  <p>
+    Con la ayuda de ChatGPT, el equipo obtuvo y adaptó un código funcional que permite leer la temperatura y la humedad 
+    mediante el sensor DHT11 y mostrar los valores en la pantalla OLED.
+  </p><br>
+
+  <h3>Código Utilizado</h3>
+
+  <pre><code>
+#include &lt;SPI.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+#include "DHT.h"
+
+// -------- CONFIGURACIÓN OLED (SPI) --------
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_MOSI 23
+#define OLED_CLK 18
+#define OLED_DC 25
+#define OLED_CS 32
+#define OLED_RESET 21
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS);
+
+// -------- CONFIGURACIÓN DHT11 --------
+#define DHTPIN 4       // Pin del ESP32 conectado al DHT11
+#define DHTTYPE DHT11  // Tipo de sensor
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Iniciando sistema...");
+
+  // Iniciar OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
+    Serial.println("❌ No se encontró la pantalla OLED");
+    for (;;);
+  }
+
+  // Iniciar DHT11
+  dht.begin();
+
+  // Pantalla inicial
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 25);
+  display.println("Iniciando...");
+  display.display();
+  delay(2000);
+}
+
+void loop() {
+  // Leer datos del sensor
+  float temp = dht.readTemperature();
+  float hum = dht.readHumidity();
+
+  // Verificar si los valores son válidos
+  if (isnan(temp) || isnan(hum)) {
+    Serial.println("❌ Error al leer el sensor DHT11");
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setCursor(10, 25);
+    display.println("Error sensor");
+    display.display();
+  } else {
+    // Mostrar en consola
+    Serial.print("Temperatura: ");
+    Serial.print(temp);
+    Serial.print(" °C  |  Humedad: ");
+    Serial.print(hum);
+    Serial.println(" %");
+
+    // Mostrar en OLED
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+    display.setCursor(0, 5);
+    display.println("Sensor DHT11");
+
+    display.setTextSize(2);
+    display.setCursor(0, 25);
+    display.print(temp);
+    display.println(" C");
+
+    display.setTextSize(2);
+    display.setCursor(0, 50);
+    display.print(hum);
+    display.println(" %");
+    display.display();
+  }
+
+  delay(2000); // Actualiza cada 2 segundos
+}
+  </code></pre>
+
+  <p>
+    Posteriormente, se logró habilitar la conectividad WiFi del ESP32 y se implementó con éxito la funcionalidad 
+    de envío de notificaciones automáticas a través de <strong>Telegram</strong>, mediante un bot configurado 
+    específicamente para el proyecto. En esta etapa, el sistema enviaba correctamente la temperatura registrada, 
+    aunque inicialmente no mostraba los valores en la pantalla OLED.
+  </p>
+
+  <p>
+    Tras realizar nuevas pruebas y ajustes, el equipo consiguió hacer funcionar de manera simultánea todos los 
+    componentes: el sensor, la pantalla OLED y el envío de datos al bot de Telegram, alcanzando así uno de los 
+    principales objetivos del proyecto.
+  </p>
+
+  <p>
+    De esta forma, el prototipo pudo medir la temperatura y humedad en tiempo real, visualizarlas en pantalla y 
+    reportarlas remotamente a través de Internet.
+  </p>
+
+  <p>
+    Finalmente, se comenzó a planificar la disposición física y mecánica de los componentes (sensor, pantalla y placa ESP32), 
+    con el fin de desarrollar una estructura funcional que permita instalar el dispositivo en una sala de servidores, 
+    cumpliendo con el propósito del proyecto: contar con un sistema de monitoreo remoto de temperatura que contribuya 
+    al control y mantenimiento del ambiente donde se encuentran los equipos.
+  </p><br>
+  <h3>Código final que permite mostrar la temperatura y humedad en la OLED y manda la alerta a Telegram</h3>
+  <pre><code>
+#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+#include "DHT.h"
+
+// ---------- WIFI ----------
+const char* ssid     = "Ceibal-2.4GHz";
+const char* password = "";
+
+// ---------- TELEGRAM ----------
+String botToken = "8421682878:AAEq2uzHKsqD8j_M9_9O2wNVxgdP-vrIeP0";
+String chatID   = "6711269098";
+
+// ---------- DHT ----------
+#define DHTPIN 4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// ---------- OLED (SPI) ----------
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_MOSI 23
+#define OLED_CLK  18
+#define OLED_DC   25
+#define OLED_CS   32
+#define OLED_RESET 21
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS);
+
+// ---------- CONFIG ----------
+float UMBRAL_TEMP = 20.0;      // °C
+unsigned long PERIODO_MS = 10'000; // 10 s
+unsigned long tPrev = 0;
+
+// ---------- helpers ----------
+void oledMsg(const String& l1, const String& l2 = "") {
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.println(l1);
+  display.setTextSize(2);
+  display.setCursor(0, 20);
+  display.println(l2);
+  display.display();
+}
+
+void conectarWifi() {
+  Serial.print("Conectando a Wi-Fi");
+  WiFi.begin(ssid, password);
+  uint32_t t0 = millis();
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(400);
+    Serial.print(".");
+    if (millis() - t0 > 15000) {
+      Serial.println("\n⚠️ Timeout Wi-Fi.");
+      return;
+    }
+  }
+  Serial.println("\n✅ Wi-Fi conectado");
+  Serial.print("IP: "); Serial.println(WiFi.localIP());
+}
+
+void enviarTelegram(const String& msg) {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("⚠️ Sin Wi-Fi, no envío Telegram");
+    return;
+  }
+  HTTPClient http;
+  String safe = msg; safe.replace(" ", "%20");
+  String url = "https://api.telegram.org/bot" + botToken +
+               "/sendMessage?chat_id=" + chatID + "&text=" + safe;
+
+  if (http.begin(url)) {
+    int code = http.GET();
+    if (code > 0) Serial.printf("📨 Telegram HTTP %d\n", code);
+    else          Serial.printf("❌ Error Telegram: %d\n", code);
+    http.end();
+  } else {
+    Serial.println("❌ http.begin() falló");
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(200);
+
+  conectarWifi();
+
+  SPI.begin(OLED_CLK, -1, OLED_MOSI, OLED_CS);
+
+  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
+    Serial.println("❌ No se encontró la OLED SSD1306");
+    while (true) delay(10);
+  }
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+
+  dht.begin();
+
+  oledMsg("Sistema listo", WiFi.isConnected() ? WiFi.localIP().toString() : "sin Wi-Fi");
+  delay(30000);
+}
+
+void loop() {
+  if (millis() - tPrev < PERIODO_MS) return;
+  tPrev = millis();
+
+  if (WiFi.status() != WL_CONNECTED) conectarWifi();
+
+  float t = dht.readTemperature();
+  float h = dht.readHumidity();
+
+  if (isnan(t) || isnan(h)) {
+    Serial.println("❌ Error lectura DHT11");
+    oledMsg("Error lectura", "DHT11");
+    return;
+  }
+
+  Serial.printf("🌡 %.1f C  💧 %.0f %%\n", t, h);
+
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.println("DHT11");
+
+  display.setTextSize(2);
+  display.setCursor(0, 16);
+  display.printf("%.1f C\n", t);
+
+  display.setTextSize(2);
+  display.setCursor(0, 40);
+  display.printf("%.0f %%\n", h);
+  display.display();
+
+  if (t > UMBRAL_TEMP) {
+    enviarTelegram("🚨 Alerta: temperatura alta (" + String(t, 1) + " °C)");
+  }
+}
+  </code></pre><br>
+  </section>
+    <section class="galeria-fotos">
+      <h2>Galería de Fotos del Proyecto</h2>
+    
+    <div class="carrusel-container">
+      <div class="carrusel-wrapper">
+        <div class="carrusel-slides" id="carrusel-slides">
+          <div class="slide active">
+            <div class="slide-info">
+              <h3>Prueba de OLED encendido y alerta por Telegram</h3>
+            </div>
+            <img src="image/avance3.2.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Alerta por mensaje de Telegram</h3>
+              <p>La imágen muestra la alerta que llega a Telegram y se pueden ver los cambios de temperatura.</p>
+            </div>
+            <img src="image/avance3.1.jpeg" alt="OLED funcionando" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Circuito funcionando correctamente</h3>
+              <p>Circuito completo, con la OLED mostrando la temperatura y alerta en Telegram.</p>
+            </div>
+            <img src="image/avance3.3.jpeg" alt="Código de prueba con LED" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3></h3>
+              <p></p>
+            </div>
+            <img src="image/avance3.4.jpeg" alt="Código de prueba para la pantalla OLED" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3></h3>
+              <p></p>
+            </div>
+            <img src="image/avance3.5.jpeg" alt="Código para leer temperatura y humedad" onclick="abrirModal(this)">
+          </div>
+        </div>
+        
+        <!-- Controles del carrusel -->
+        <button class="carrusel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+        <button class="carrusel-btn next" onclick="cambiarSlide(1)">❯</button>
+        
+        <!-- Contador de slides -->
+        <div class="carrusel-contador">
+          <span id="slide-actual">1</span> de <span id="total-slides">6</span>
+        </div>
+        
+        <!-- Indicadores -->
+        <div class="carrusel-indicadores">
+          <span class="indicador active" onclick="irASlide(0)"></span>
+          <span class="indicador" onclick="irASlide(1)"></span>
+          <span class="indicador" onclick="irASlide(2)"></span>
+          <span class="indicador" onclick="irASlide(3)"></span>
+          <span class="indicador" onclick="irASlide(4)"></span>
+          <span class="indicador" onclick="irASlide(5)"></span>
+        </div>
+        
+        <!-- Miniaturas de navegación -->
+        <div class="carrusel-miniaturas">
+          <img src="image/avance3.2.jpeg" alt="Slide 1" onclick="irASlide(0)" class="miniatura active">
+          <img src="image/avance3.1.jpeg" alt="Slide 2" onclick="irASlide(1)" class="miniatura">
+          <img src="image/avance3.3.jpeg" alt="Slide 3" onclick="irASlide(2)" class="miniatura">
+          <img src="image/avance3.4.jpeg" alt="Slide 4" onclick="irASlide(3)" class="miniatura">
+          <img src="image/avance3.5.jpeg" alt="Slide 5" onclick="irASlide(4)" class="miniatura">
+        </div>
       </div>
     </div>
   </section>
+    <!-- Modal para ver imágenes en grande -->
+  <div id="modal-imagen" class="modal" onclick="cerrarModal()">
+    <span class="cerrar">&times;</span>
+    <img class="modal-contenido" id="imagen-modal">
+    <div class="caption" id="caption"></div>
+  </div>
   <!-- Footer -->
   <footer>
     <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
     <p>&copy; 2025 Proyecto Académico</p>
   </footer>
+  <script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll(".slide");
+  const indicadores = document.querySelectorAll(".indicador");
+  const miniaturas = document.querySelectorAll(".miniatura");
+  const totalSlides = slides.length;
+  const contadorActual = document.getElementById("slide-actual");
+  document.getElementById("total-slides").textContent = totalSlides;
+
+  function mostrarSlide(n) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === n);
+    });
+    indicadores.forEach((dot, i) => {
+      dot.classList.toggle("active", i === n);
+    });
+    miniaturas.forEach((thumb, i) => {
+      thumb.classList.toggle("active", i === n);
+    });
+    slideIndex = n;
+    contadorActual.textContent = n + 1;
+  }
+
+  function cambiarSlide(n) {
+    let nuevoIndex = slideIndex + n;
+    if (nuevoIndex >= totalSlides) nuevoIndex = 0;
+    if (nuevoIndex < 0) nuevoIndex = totalSlides - 1;
+    mostrarSlide(nuevoIndex);
+  }
+
+  function irASlide(n) {
+    mostrarSlide(n);
+  }
+
+  // --- Modal para ver imagen en grande ---
+  function abrirModal(img) {
+    const modal = document.getElementById("modal-imagen");
+    const modalImg = document.getElementById("imagen-modal");
+    const caption = document.getElementById("caption");
+
+    modal.style.display = "block";
+    modalImg.src = img.src;
+    caption.textContent = img.alt;
+  }
+
+  function cerrarModal() {
+    document.getElementById("modal-imagen").style.display = "none";
+  }
+
+  // Inicializar primer slide
+  mostrarSlide(slideIndex);
+</script>
 </body>
 
 </html>

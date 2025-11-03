@@ -36,8 +36,63 @@
             </ul>
         </nav>
     </header>
+    <!-- Banner -->
+        <section class="banner">
+    <img src="image/servidor2.jpg" alt="Banner del proyecto">
+    <h1>Documentación Técnica</h1>
+    </section>
+        <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido container">
+    <h2>Sistema de Monitoreo de Temperatura con ESP32 y Alerta por Telegram</h2>
 
-    <!-- Footer -->
+    <h3>Introducción</h3>
+    <p>
+        El proyecto tiene como objetivo desarrollar un sistema de monitoreo de temperatura para cuartos de servidores utilizando una placa <strong>ESP32</strong> conectada a un sensor <strong>DHT11</strong>.
+        El sistema permite vigilar en tiempo real la temperatura ambiente y enviar alertas automáticas a través de <strong>Telegram</strong> cuando se supera un umbral crítico.
+        Con esto se busca prevenir el sobrecalentamiento de los equipos y mejorar la seguridad y el rendimiento de los servidores.
+    </p>
+
+    <h3>Objetivos del Proyecto</h3>
+    <p><strong>Objetivo general:</strong> Diseñar e implementar un sistema automatizado de monitoreo de temperatura con notificaciones instantáneas mediante Telegram.</p>
+
+    <p><strong>Objetivos específicos:</strong></p>
+    <ul>
+        <li>Monitorear en tiempo real la temperatura en los cuartos de servidores.</li>
+        <li>Detectar variaciones críticas que puedan afectar el rendimiento de los equipos.</li>
+        <li>Confirmar el correcto funcionamiento del sistema de refrigeración.</li>
+        <li>Minimizar los riesgos de sobrecalentamiento.</li>
+        <li>Implementar una solución económica, sencilla y de fácil instalación.</li>
+    </ul>
+
+    <!--<h3>Componentes Utilizados</h3>
+    <p>
+        Se utilizó un <strong>ESP32</strong> como microcontrolador principal, un sensor <strong>DHT11</strong> para medir la temperatura, una pantalla <strong>OLED de 0.96 pulgadas</strong> para mostrar los valores en tiempo real,
+        cables y una conexión Wi-Fi para el envío de alertas mediante la <strong>API de Telegram</strong>.
+    </p>
+
+    <h3>Software y Herramientas</h3>
+    <p>
+        El entorno de desarrollo utilizado fue <strong>Arduino IDE</strong>, programando en lenguaje C++.
+        Se emplearon las siguientes librerías:
+    </p>
+    <ul>
+        <li><strong>WiFi.h</strong> para la conexión inalámbrica.</li>
+        <li><strong>HTTPClient.h</strong> para el envío de solicitudes a Telegram.</li>
+        <li><strong>DHT.h</strong> para la lectura del sensor.</li>
+        li><strong>Adafruit_GFX.h</strong> y <strong>Adafruit_SSD1306.h</strong> para controlar la pantalla OLED.</li>
+    </ul>
+
+    <h3>Funcionamiento del Sistema</h3>
+    <p>
+        El <strong>ESP32</strong> se conecta automáticamente a la red Wi-Fi configurada.
+        El sensor <strong>DHT11</strong> mide la temperatura ambiente y envía los valores al microcontrolador.
+        La temperatura se muestra en la pantalla <strong>OLED</strong> en tiempo real.
+        Si la temperatura supera el umbral definido, el ESP32 envía un mensaje de alerta a través del <strong>bot de Telegram</strong>.
+        El sistema realiza una nueva lectura cada diez segundos, verificando si se mantiene la condición de alerta.
+    </p>
+
+    <a href="index.html" class="boton-volver">Volver al inicio</a>
+    </section> -->
     <footer>
         <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
         <p>&copy; 2025 Proyecto Académico</p>

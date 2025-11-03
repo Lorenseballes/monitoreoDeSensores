@@ -53,35 +53,48 @@
 
   </section>
 
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Explora Nuestro Progreso</h2>
+      <p>Descubre cómo hemos desarrollado este sistema de monitoreo paso a paso</p>
+      <div class="cta-buttons">
+        <a href="avances.html" class="btn-primary">Ver Todos los Avances</a>
+        <a href="avances2.html" class="btn-secondary">Ver Último Avance</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Lista de materiales -->
   <section class="galeria-materiales">
     <h2>Lista de Materiales</h2>
-    <div class="grid-materiales">
-      <div class="item-material">
+    
+    <div class="grid-materiales" id="grid-materiales">
+      <div class="item-material" data-categoria="hardware">
         <img src="image/arduinoESP32.jpeg" alt="Arduino ESP32" onclick="abrirModal(this)">
         <h3>Arduino ESP32</h3>
         <p>Microcontrolador con conexión WiFi y Bluetooth, ideal para proyectos IoT y procesamiento de datos en tiempo real.</p>
       </div>
 
-      <div class="item-material">
+      <div class="item-material" data-categoria="hardware">
         <img src="image/bateria.jpeg" alt="Fuente de energía" onclick="abrirModal(this)">
         <h3>Fuente de energía</h3>
         <p>Dispositivo encargado de suministrar la energía necesaria para el funcionamiento del circuito y sus componentes.</p>
       </div>
 
-      <div class="item-material">
+      <div class="item-material" data-categoria="hardware">
         <img src="image/pantallaLed.jpeg" alt="Pantalla LED" onclick="abrirModal(this)">
         <h3>Pantalla LED</h3>
         <p>Permite mostrar información como la temperatura, humedad o mensajes de estado en tiempo real.</p>
       </div>
 
-      <div class="item-material">
+      <div class="item-material" data-categoria="hardware">
         <img src="image/protoboard.jpeg" alt="Protoboard" onclick="abrirModal(this)">
         <h3>Protoboard</h3>
         <p>Tablero de pruebas que facilita el montaje de circuitos sin necesidad de soldadura.</p>
       </div>
 
-      <div class="item-material">
+      <div class="item-material" data-categoria="hardware">
         <img src="image/sensor.jpeg" alt="Sensor DHT11" onclick="abrirModal(this)">
         <h3>Sensor DHT11</h3>
         <p>Sensor digital que mide temperatura y humedad, enviando los datos al microcontrolador para su procesamiento.</p>
@@ -103,6 +116,52 @@
   </footer>
 
   <script>
+    // Variables para filtros
+    let categoriaActual = 'todos';
+    let busquedaActual = '';
+
+    // Función para filtrar por tipo
+    function filtrarPorTipo(tipo) {
+      categoriaActual = tipo;
+      
+      // Actualizar botones activos
+      document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      aplicarFiltros();
+    }
+
+    // Función para filtrar por búsqueda
+    function filtrarMateriales() {
+      busquedaActual = document.getElementById('busqueda-materiales').value.toLowerCase();
+      aplicarFiltros();
+    }
+
+    // Función para aplicar filtros
+    function aplicarFiltros() {
+      const materiales = document.querySelectorAll('.item-material');
+      
+      materiales.forEach(material => {
+        const categoria = material.getAttribute('data-categoria');
+        const titulo = material.querySelector('h3').textContent.toLowerCase();
+        const descripcion = material.querySelector('p').textContent.toLowerCase();
+        
+        const coincideCategoria = categoriaActual === 'todos' || categoria === categoriaActual;
+        const coincideBusqueda = busquedaActual === '' || 
+          titulo.includes(busquedaActual) || 
+          descripcion.includes(busquedaActual);
+        
+        if (coincideCategoria && coincideBusqueda) {
+          material.style.display = 'block';
+          material.style.animation = 'fadeIn 0.3s ease';
+        } else {
+          material.style.display = 'none';
+        }
+      });
+    }
+
     // Función para abrir el modal con la imagen
     function abrirModal(elemento) {
       const modal = document.getElementById('modal-imagen');

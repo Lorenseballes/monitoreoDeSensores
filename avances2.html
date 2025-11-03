@@ -324,33 +324,90 @@ void setup() {
     </div>
   </section>
 
-  <!-- Galería de Fotos -->
+  <!-- Galería de Fotos con Carrusel -->
   <section class="galeria-fotos">
     <h2>Galería de Fotos del Proyecto</h2>
-    <div class="grid-galeria">
-      <div class="item-galeria">
-        <img src="image/codigoEnLed2.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
-        <p>Prueba de OLED encendido</p>
-      </div>
-      <div class="item-galeria">
-        <img src="image/codigoEnLed.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
-        <p>Prueba de OLED encendido</p>
-      </div>
-      <div class="item-galeria">
-        <img src="image/Código de prueba con LED.png" alt="Código de prueba con LED" onclick="abrirModal(this)">
-        <p>Código de prueba con LED</p>
-      </div>
-      <div class="item-galeria">
-        <img src="image/Código de prueba para la pantalla OLED.png" alt="Código de prueba para la pantalla OLED" onclick="abrirModal(this)">
-        <p>Código de prueba para la pantalla OLED</p>
-      </div>
-      <div class="item-galeria">
-        <img src="image/Código para leer temperatura y humedad (proporcionado por ChatGPT).png" alt="Código para leer temperatura y humedad" onclick="abrirModal(this)">
-        <p>Código para leer temperatura y humedad</p>
-      </div>
-      <div class="item-galeria">
-        <img src="image/tinkercad.jpeg" alt="tinkercad" onclick="abrirModal(this)">
-        <p>Prueba del circuito en tinkercad</p>
+    
+    <div class="carrusel-container">
+      <div class="carrusel-wrapper">
+        <div class="carrusel-slides" id="carrusel-slides">
+          <div class="slide active">
+            <div class="slide-info">
+              <h3>Prueba de OLED encendido</h3>
+              <p>Primera prueba exitosa de la pantalla OLED mostrando el mensaje "HOLA!" en el ESP32.</p>
+            </div>
+            <img src="image/codigoEnLed2.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>OLED funcionando correctamente</h3>
+              <p>Verificación del funcionamiento de la pantalla OLED con el código de prueba implementado.</p>
+            </div>
+            <img src="image/codigoEnLed.jpeg" alt="OLED funcionando" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Código de prueba con LED</h3>
+              <p>Implementación del código básico para verificar el funcionamiento del LED integrado en el ESP32.</p>
+            </div>
+            <img src="image/Código de prueba con LED.png" alt="Código de prueba con LED" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Código para pantalla OLED</h3>
+              <p>Desarrollo del código específico para controlar y mostrar información en la pantalla OLED.</p>
+            </div>
+            <img src="image/Código de prueba para la pantalla OLED.png" alt="Código de prueba para la pantalla OLED" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Código de sensor DHT11</h3>
+              <p>Implementación del código para leer datos de temperatura y humedad del sensor DHT11.</p>
+            </div>
+            <img src="image/Código para leer temperatura y humedad (proporcionado por ChatGPT).png" alt="Código para leer temperatura y humedad" onclick="abrirModal(this)">
+          </div>
+          
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Simulación en Tinkercad</h3>
+              <p>Prueba del circuito completo en la plataforma Tinkercad antes de la implementación física.</p>
+            </div>
+            <img src="image/tinkercad.jpeg" alt="Simulación en Tinkercad" onclick="abrirModal(this)">
+          </div>
+        </div>
+        
+        <!-- Controles del carrusel -->
+        <button class="carrusel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+        <button class="carrusel-btn next" onclick="cambiarSlide(1)">❯</button>
+        
+        <!-- Contador de slides -->
+        <div class="carrusel-contador">
+          <span id="slide-actual">1</span> de <span id="total-slides">6</span>
+        </div>
+        
+        <!-- Indicadores -->
+        <div class="carrusel-indicadores">
+          <span class="indicador active" onclick="irASlide(0)"></span>
+          <span class="indicador" onclick="irASlide(1)"></span>
+          <span class="indicador" onclick="irASlide(2)"></span>
+          <span class="indicador" onclick="irASlide(3)"></span>
+          <span class="indicador" onclick="irASlide(4)"></span>
+          <span class="indicador" onclick="irASlide(5)"></span>
+        </div>
+        
+        <!-- Miniaturas de navegación -->
+        <div class="carrusel-miniaturas">
+          <img src="image/codigoEnLed2.jpeg" alt="Slide 1" onclick="irASlide(0)" class="miniatura active">
+          <img src="image/codigoEnLed.jpeg" alt="Slide 2" onclick="irASlide(1)" class="miniatura">
+          <img src="image/Código de prueba con LED.png" alt="Slide 3" onclick="irASlide(2)" class="miniatura">
+          <img src="image/Código de prueba para la pantalla OLED.png" alt="Slide 4" onclick="irASlide(3)" class="miniatura">
+          <img src="image/Código para leer temperatura y humedad (proporcionado por ChatGPT).png" alt="Slide 5" onclick="irASlide(4)" class="miniatura">
+          <img src="image/tinkercad.jpeg" alt="Slide 6" onclick="irASlide(5)" class="miniatura">
+        </div>
       </div>
     </div>
   </section>
@@ -369,6 +426,76 @@ void setup() {
   </footer>
 
   <script>
+    let slideActual = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicadores = document.querySelectorAll('.indicador');
+    const miniaturas = document.querySelectorAll('.miniatura');
+    const totalSlides = slides.length;
+    const slideActualElement = document.getElementById('slide-actual');
+    const totalSlidesElement = document.getElementById('total-slides');
+
+    // Función para cambiar slide
+    function cambiarSlide(direccion) {
+      slides[slideActual].classList.remove('active');
+      indicadores[slideActual].classList.remove('active');
+      miniaturas[slideActual].classList.remove('active');
+      
+      slideActual += direccion;
+      
+      if (slideActual >= totalSlides) {
+        slideActual = 0;
+      } else if (slideActual < 0) {
+        slideActual = totalSlides - 1;
+      }
+      
+      slides[slideActual].classList.add('active');
+      indicadores[slideActual].classList.add('active');
+      miniaturas[slideActual].classList.add('active');
+      slideActualElement.textContent = slideActual + 1;
+    }
+
+    // Función para ir a un slide específico
+    function irASlide(indice) {
+      slides[slideActual].classList.remove('active');
+      indicadores[slideActual].classList.remove('active');
+      miniaturas[slideActual].classList.remove('active');
+      
+      slideActual = indice;
+      
+      slides[slideActual].classList.add('active');
+      indicadores[slideActual].classList.add('active');
+      miniaturas[slideActual].classList.add('active');
+      slideActualElement.textContent = slideActual + 1;
+    }
+
+    // Auto-play del carrusel
+    function autoPlay() {
+      cambiarSlide(1);
+    }
+
+    // Iniciar auto-play cada 5 segundos
+    let autoPlayInterval = setInterval(autoPlay, 5000);
+
+    // Pausar auto-play al hacer hover
+    const carruselContainer = document.querySelector('.carrusel-container');
+    carruselContainer.addEventListener('mouseenter', () => {
+      clearInterval(autoPlayInterval);
+    });
+
+    // Reanudar auto-play al quitar hover
+    carruselContainer.addEventListener('mouseleave', () => {
+      autoPlayInterval = setInterval(autoPlay, 5000);
+    });
+
+    // Navegación con teclado
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft') {
+        cambiarSlide(-1);
+      } else if (event.key === 'ArrowRight') {
+        cambiarSlide(1);
+      }
+    });
+
     // Función para abrir el modal con la imagen
     function abrirModal(elemento) {
       const modal = document.getElementById('modal-imagen');
