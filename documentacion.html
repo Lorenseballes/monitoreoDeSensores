@@ -2,101 +2,375 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentación técnica</title>
-    <link rel="stylesheet" href="css/estilo.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentación técnica</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Encabezado con menú -->
-    <header id="inicio">
-        <nav>
-            <div class="logo">
-                <a href="index.html">
-                    <img src="image/logo2.png" alt="Logo del Proyecto">
-                </a>
-            </div>
-            <ul>
-                <li><a href="index.html" class="activo">Inicio</a></li>
+  <!-- Encabezado con menú -->
+  <header id="inicio">
+    <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="image/logo2.png" alt="Logo del Proyecto">
+        </a>
+      </div>
+      <ul>
+        <li><a href="index.html" class="activo">Inicio</a></li>
 
-                <!-- Menú desplegable Avances -->
-                <li class="submenu">
-                    <a href="avances.html">Avances</a>
-                    <ul class="submenu-opciones">
-                        <li><a href="avances1.html">Avance 1</a></li>
-                        <li><a href="avances2.html">Avance 2</a></li>
-                        <li><a href="avances3.html">Avance 3</a></li>
-                    </ul>
-                </li>
+        <!-- Menú desplegable Avances -->
+        <li class="submenu">
+          <a href="avances.html">Avances</a>
+          <ul class="submenu-opciones">
+            <li><a href="avances1.html">Avance 1</a></li>
+            <li><a href="avances2.html">Avance 2</a></li>
+            <li><a href="avances3.html">Avance 3</a></li>
+          </ul>
+        </li>
 
-                <li><a href="equipo.html">Equipo</a></li>
-                <li><a href="documentacion.html">Documentación Técnica</a></li>
-            </ul>
-        </nav>
-    </header>
-    <!-- Banner -->
-        <section class="banner">
+        <li><a href="equipo.html">Equipo</a></li>
+        <li><a href="documentacion.html">Documentación Técnica</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Banner -->
+  <section class="banner">
     <img src="image/servidor2.jpg" alt="Banner del proyecto">
     <h1>Documentación Técnica</h1>
-    </section>
-        <!-- CONTENIDO PRINCIPAL -->
-    <section class="contenido container">
+  </section>
+  <!-- CONTENIDO PRINCIPAL -->
+  <section class="contenido container documentacion">
     <h2>Sistema de Monitoreo de Temperatura con ESP32 y Alerta por Telegram</h2>
 
-    <h3>Introducción</h3>
+    <h2>Introducción</h2>
     <p>
-        El proyecto tiene como objetivo desarrollar un sistema de monitoreo de temperatura para cuartos de servidores utilizando una placa <strong>ESP32</strong> conectada a un sensor <strong>DHT11</strong>.
-        El sistema permite vigilar en tiempo real la temperatura ambiente y enviar alertas automáticas a través de <strong>Telegram</strong> cuando se supera un umbral crítico.
-        Con esto se busca prevenir el sobrecalentamiento de los equipos y mejorar la seguridad y el rendimiento de los servidores.
-    </p>
+      El proyecto tiene como objetivo desarrollar un sistema de monitoreo de temperatura para cuartos de
+      servidores utilizando una placa <strong>ESP32</strong> conectada a un sensor <strong>DHT11</strong>.
+      El sistema permite vigilar en tiempo real la temperatura ambiente y enviar alertas automáticas a través de
+      <strong>Telegram</strong> cuando se supera un umbral crítico.
+      Con esto se busca prevenir el sobrecalentamiento de los equipos y mejorar la seguridad y el rendimiento de
+      los servidores.
+    </p><br>
 
-    <h3>Objetivos del Proyecto</h3>
-    <p><strong>Objetivo general:</strong> Diseñar e implementar un sistema automatizado de monitoreo de temperatura con notificaciones instantáneas mediante Telegram.</p>
+    <h2>Objetivos del Proyecto</h2>
+    <p><strong>Objetivo general:</strong> Diseñar e implementar un sistema automatizado de monitoreo de temperatura
+      con notificaciones instantáneas mediante Telegram.</p>
 
     <p><strong>Objetivos específicos:</strong></p>
     <ul>
-        <li>Monitorear en tiempo real la temperatura en los cuartos de servidores.</li>
-        <li>Detectar variaciones críticas que puedan afectar el rendimiento de los equipos.</li>
-        <li>Confirmar el correcto funcionamiento del sistema de refrigeración.</li>
-        <li>Minimizar los riesgos de sobrecalentamiento.</li>
-        <li>Implementar una solución económica, sencilla y de fácil instalación.</li>
-    </ul>
+      <li>Monitorear en tiempo real la temperatura en los cuartos de servidores.</li>
+      <li>Detectar variaciones críticas que puedan afectar el rendimiento de los equipos.</li>
+      <li>Confirmar el correcto funcionamiento del sistema de refrigeración.</li>
+      <li>Minimizar los riesgos de sobrecalentamiento.</li>
+      <li>Implementar una solución económica, sencilla y de fácil instalación.</li>
+    </ul><br>
 
-    <!--<h3>Componentes Utilizados</h3>
+    <h2>Componentes Utilizados</h2>
     <p>
-        Se utilizó un <strong>ESP32</strong> como microcontrolador principal, un sensor <strong>DHT11</strong> para medir la temperatura, una pantalla <strong>OLED de 0.96 pulgadas</strong> para mostrar los valores en tiempo real,
-        cables y una conexión Wi-Fi para el envío de alertas mediante la <strong>API de Telegram</strong>.
+      Se utilizó un ESP32 como microcontrolador principal, un sensor DHT11 para medir la temperatura, una pantalla
+      OLED de 0.96 pulgadas para mostrar los valores en tiempo real,
+      cables y una conexión Wi-Fi para el envío de alertas mediante la API de Telegram.
     </p>
 
     <h3>Software y Herramientas</h3>
     <p>
-        El entorno de desarrollo utilizado fue <strong>Arduino IDE</strong>, programando en lenguaje C++.
-        Se emplearon las siguientes librerías:
+      El entorno de desarrollo utilizado fue Arduino IDE, programando en lenguaje C++.
+      Se emplearon las siguientes librerías:
     </p>
     <ul>
-        <li><strong>WiFi.h</strong> para la conexión inalámbrica.</li>
-        <li><strong>HTTPClient.h</strong> para el envío de solicitudes a Telegram.</li>
-        <li><strong>DHT.h</strong> para la lectura del sensor.</li>
-        li><strong>Adafruit_GFX.h</strong> y <strong>Adafruit_SSD1306.h</strong> para controlar la pantalla OLED.</li>
+      <li>WiFi.h</strong> para la conexión inalámbrica.</li>
+      <li>HTTPClient.h para el envío de solicitudes a Telegram.</li>
+      <li>DHT.h para la lectura del sensor.</li>
+      <li>Adafruit_GFX.h y Adafruit_SSD1306.h para controlar la pantalla OLED.</li><br>
     </ul>
 
-    <h3>Funcionamiento del Sistema</h3>
+    <h2>Funcionamiento del Sistema</h2>
     <p>
-        El <strong>ESP32</strong> se conecta automáticamente a la red Wi-Fi configurada.
-        El sensor <strong>DHT11</strong> mide la temperatura ambiente y envía los valores al microcontrolador.
-        La temperatura se muestra en la pantalla <strong>OLED</strong> en tiempo real.
-        Si la temperatura supera el umbral definido, el ESP32 envía un mensaje de alerta a través del <strong>bot de Telegram</strong>.
-        El sistema realiza una nueva lectura cada diez segundos, verificando si se mantiene la condición de alerta.
-    </p>
+      El ESP32 se conecta automáticamente a la red Wi-Fi configurada.
+      El sensor DHT11 mide la temperatura ambiente y envía los valores al microcontrolador.
+      La temperatura se muestra en la pantalla OLED en tiempo real.
+      Si la temperatura supera el umbral definido, el ESP32 envía un mensaje de alerta a través del bot de
+      Telegram.
+      El sistema realiza una nueva lectura cada diez segundos, verificando si se mantiene la condición de alerta.
+    </p> <br>
+
+    <!-- Galería de Fotos del Proyecto -->
+    <section class="galeria-fotos">
+      <h2>Galería de Fotos del Proyecto</h2>
+
+      <div class="carrusel-container">
+        <div class="carrusel-wrapper">
+          <div class="carrusel-slides" id="carrusel-slides">
+            <div class="slide active">
+              <div class="slide-info">
+                <h3>Prueba de OLED encendido</h3>
+                <p>Primera prueba exitosa de la pantalla OLED mostrando el mensaje "HOLA!" en el ESP32.</p>
+              </div>
+              <img src="image/codigoEnLed2.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>OLED funcionando correctamente</h3>
+                <p>Verificación del funcionamiento de la pantalla OLED con el código de prueba implementado.</p>
+              </div>
+              <img src="image/codigoEnLed.jpeg" alt="OLED funcionando" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Código de prueba con LED</h3>
+                <p>Implementación del código básico para verificar el funcionamiento del LED integrado en el ESP32.</p>
+              </div>
+              <img src="image/Código de prueba con LED.png" alt="Código de prueba con LED" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Código para pantalla OLED</h3>
+                <p>Desarrollo del código específico para controlar y mostrar información en la pantalla OLED.</p>
+              </div>
+              <img src="image/Código de prueba para la pantalla OLED.png" alt="Código de prueba para la pantalla OLED"
+                onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Código de sensor DHT11</h3>
+                <p>Implementación del código para leer datos de temperatura y humedad del sensor DHT11.</p>
+              </div>
+              <img src="image/Código para leer temperatura y humedad (proporcionado por ChatGPT).png"
+                alt="Código para leer temperatura y humedad" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Simulación en Tinkercad</h3>
+                <p>Prueba del circuito completo en la plataforma Tinkercad antes de la implementación física.</p>
+              </div>
+              <img src="image/tinkercad.jpeg" alt="Simulación en Tinkercad" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Prueba de OLED encendido y alerta por Telegram</h3>
+              </div>
+              <img src="image/avance3.2.jpeg" alt="OLED encendido" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Alerta por mensaje de Telegram</h3>
+                <p>La imágen muestra la alerta que llega a Telegram y se pueden ver los cambios de temperatura.</p>
+              </div>
+              <img src="image/avance3.1.jpeg" alt="OLED funcionando" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3>Circuito funcionando correctamente</h3>
+                <p>Circuito completo, con la OLED mostrando la temperatura y alerta en Telegram.</p>
+              </div>
+              <img src="image/avance3.3.jpeg" alt="Código de prueba con LED" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3></h3>
+                <p></p>
+              </div>
+              <img src="image/avance3.4.jpeg" alt="Código de prueba para la pantalla OLED" onclick="abrirModal(this)">
+            </div>
+
+            <div class="slide">
+              <div class="slide-info">
+                <h3></h3>
+                <p></p>
+              </div>
+              <img src="image/avance3.5.jpeg" alt="Código para leer temperatura y humedad" onclick="abrirModal(this)">
+            </div>
+          </div>
+
+          <!-- Controles del carrusel -->
+          <button class="carrusel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+          <button class="carrusel-btn next" onclick="cambiarSlide(1)">❯</button>
+
+          <!-- Contador de slides -->
+          <div class="carrusel-contador">
+            <span id="slide-actual">1</span> de <span id="total-slides">11</span>
+          </div>
+
+          <!-- Indicadores -->
+          <div class="carrusel-indicadores">
+            <span class="indicador active" onclick="irASlide(0)"></span>
+            <span class="indicador" onclick="irASlide(1)"></span>
+            <span class="indicador" onclick="irASlide(2)"></span>
+            <span class="indicador" onclick="irASlide(3)"></span>
+            <span class="indicador" onclick="irASlide(4)"></span>
+            <span class="indicador" onclick="irASlide(5)"></span>
+            <span class="indicador" onclick="irASlide(6)"></span>
+            <span class="indicador" onclick="irASlide(7)"></span>
+            <span class="indicador" onclick="irASlide(8)"></span>
+            <span class="indicador" onclick="irASlide(9)"></span>
+            <span class="indicador" onclick="irASlide(10)"></span>
+          </div>
+
+          <!-- Miniaturas de navegación -->
+          <div class="carrusel-miniaturas">
+            <img src="image/codigoEnLed2.jpeg" alt="Slide 1" onclick="irASlide(0)" class="miniatura active">
+            <img src="image/codigoEnLed.jpeg" alt="Slide 2" onclick="irASlide(1)" class="miniatura">
+            <img src="image/Código de prueba con LED.png" alt="Slide 3" onclick="irASlide(2)" class="miniatura">
+            <img src="image/Código de prueba para la pantalla OLED.png" alt="Slide 4" onclick="irASlide(3)"
+              class="miniatura">
+            <img src="image/Código para leer temperatura y humedad (proporcionado por ChatGPT).png" alt="Slide 5"
+              onclick="irASlide(4)" class="miniatura">
+            <img src="image/tinkercad.jpeg" alt="Slide 6" onclick="irASlide(5)" class="miniatura">
+            <img src="image/avance3.2.jpeg" alt="Slide 7" onclick="irASlide(6)" class="miniatura">
+            <img src="image/avance3.1.jpeg" alt="Slide 8" onclick="irASlide(7)" class="miniatura">
+            <img src="image/avance3.3.jpeg" alt="Slide 9" onclick="irASlide(8)" class="miniatura">
+            <img src="image/avance3.4.jpeg" alt="Slide 10" onclick="irASlide(9)" class="miniatura">
+            <img src="image/avance3.5.jpeg" alt="Slide 11" onclick="irASlide(10)" class="miniatura">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal para ver imágenes en grande -->
+    <div id="modal-imagen" class="modal" onclick="cerrarModal()">
+      <span class="cerrar">&times;</span>
+      <img class="modal-contenido" id="imagen-modal">
+      <div class="caption" id="caption"></div>
+    </div> <br>
+    <section>
+  <h2>Mejoras prácticas que pueden incorporarse para aumentar la funcionalidad del sistema de monitoreo:</h2>
+
+  <ul>
+    <li><strong>Alertas por correo electrónico o SMS:</strong> Notificaciones adicionales además de Telegram para asegurar la recepción de alertas.</li>
+    <li><strong>Automatización de acciones:</strong> Activación automática de ventiladores o sistemas de refrigeración cuando la temperatura supere un umbral predefinido.</li>
+    <li><strong>Alarmas locales:</strong> Señales sonoras o luminosas en el lugar (buzzer o LEDs) para alertas inmediatas en caso de emergencia.</li>
+    <li><strong>Base de datos para históricos:</strong> Almacenamiento local o en la nube de registros de temperatura y humedad para análisis y generación de reportes.</li>
+    <li><strong>Soporte para múltiples sensores:</strong> Distribuir sensores en distintos puntos del cuarto (por ejemplo, por rack) para obtener un monitoreo más granular.</li>
+  </ul>
+</section><br>
+<section>
+      <h2>Información relacionada</h2>
+
+      <p>
+        Un data center es una instalación diseñada para albergar sistemas informáticos y componentes asociados,
+        como servidores, sistemas de almacenamiento y redes de comunicación. Su función principal es procesar,
+        almacenar y distribuir grandes volúmenes de datos, garantizando la disponibilidad y el funcionamiento
+        continuo de los servicios digitales.
+      </p>
+
+      <p>
+        Entre sus componentes principales se incluyen los servidores, los sistemas de almacenamiento, los
+        equipos de red (como routers y switches) y los sistemas de respaldo energético, como generadores y UPS.
+        También cuentan con sistemas de refrigeración para mantener la temperatura adecuada y evitar el
+        sobrecalentamiento del hardware.
+      </p>
+
+      <p>
+        La seguridad es un aspecto esencial en los data centers. Se implementan medidas tanto físicas (control
+        de acceso, videovigilancia, detección de incendios) como lógicas (firewalls, cifrado, control de
+        usuarios y copias de seguridad) para proteger la información y garantizar la continuidad del servicio
+        ante fallos o ataques.
+      </p>
+
+      <p>
+        En resumen, los data centers son el corazón de la infraestructura digital moderna, ya que permiten el
+        funcionamiento de internet, servicios en la nube, redes sociales y aplicaciones empresariales críticas.
+      </p><br>
+
+      <h2>Configuración de un bot de Telegram</h2>
+      <p>
+        La configuración de un bot de Telegram es un proceso sencillo que puede realizarse en pocos pasos.
+      </p>
+
+      <p>
+        Primero, se debe crear el bot desde la aplicación de Telegram utilizando el usuario <strong>@BotFather</strong>.
+        Para ello, se envía el comando <code>/newbot</code> y se siguen las instrucciones, proporcionando un nombre y un
+        <em>username</em> (que debe terminar en “bot”). Al finalizar, BotFather entrega un <strong>token</strong>, una
+        clave única que permitirá conectar el bot con un programa o aplicación externa.
+      </p>
+
+      <p>
+        Luego, se utiliza ese token en el código —por ejemplo, en Python con la librería
+        <code>python-telegram-bot</code> o en Node.js con <code>node-telegram-bot-api</code>— para establecer la
+        comunicación con el bot. De esta forma, se pueden enviar y recibir mensajes, responder comandos o ejecutar
+        distintas funciones programadas.
+      </p>
+
+      <p>
+        Una vez configurado, se puede buscar el bot en Telegram e iniciar la conversación para probar su funcionamiento.
+        Además, según la necesidad del proyecto, el bot puede operar mediante <strong>modo polling</strong> (consultando
+        periódicamente a Telegram por nuevos mensajes) o <strong>modo webhook</strong> (recibiendo los mensajes
+        automáticamente desde una URL configurada en un servidor).
+      </p>
+    </section>
+
 
     <a href="index.html" class="boton-volver">Volver al inicio</a>
-    </section> -->
-    <footer>
-        <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
-        <p>&copy; 2025 Proyecto Académico</p>
-    </footer>
+  </section>
+  <footer>
+    <a href="#inicio" class="boton-volver">↑ Volver arriba</a>
+    <p>&copy; 2025 Proyecto Steam- Monitoreo de servidores</p>
+  </footer>
+
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const indicadores = document.querySelectorAll(".indicador");
+    const miniaturas = document.querySelectorAll(".miniatura");
+    const totalSlides = slides.length;
+    const contadorActual = document.getElementById("slide-actual");
+    document.getElementById("total-slides").textContent = totalSlides;
+
+    function mostrarSlide(n) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === n);
+      });
+      indicadores.forEach((dot, i) => {
+        dot.classList.toggle("active", i === n);
+      });
+      miniaturas.forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === n);
+      });
+      slideIndex = n;
+      contadorActual.textContent = n + 1;
+    }
+
+    function cambiarSlide(n) {
+      let nuevoIndex = slideIndex + n;
+      if (nuevoIndex >= totalSlides) nuevoIndex = 0;
+      if (nuevoIndex < 0) nuevoIndex = totalSlides - 1;
+      mostrarSlide(nuevoIndex);
+    }
+
+    function irASlide(n) {
+      mostrarSlide(n);
+    }
+
+    // --- Modal para ver imagen en grande ---
+    function abrirModal(img) {
+      const modal = document.getElementById("modal-imagen");
+      const modalImg = document.getElementById("imagen-modal");
+      const caption = document.getElementById("caption");
+
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      caption.textContent = img.alt;
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal-imagen").style.display = "none";
+    }
+
+    // Inicializar primer slide
+    mostrarSlide(slideIndex);
+  </script>
 </body>
 
 </html>
