@@ -96,6 +96,169 @@
       Telegram.
       El sistema realiza una nueva lectura cada diez segundos, verificando si se mantiene la condición de alerta.
     </p> <br>
+    <section>
+      <h2>Código final</h2>
+
+      <p>Comportamiento del sistema de alertas según la temperatura:</p>
+
+      <ul>
+        <li>Cada 30 minutos: envía un mensaje con la temperatura si esta se encuentra dentro del rango 19–21 °C.</li>
+        <li>Si la temperatura supera los 21 °C: el sistema pasa a modo alerta y envía avisos cada 2 minutos.</li>
+        <li>Cuando la temperatura vuelve a situarse entre 19–21 °C: se envía un mensaje de normalización y el sistema
+          retorna al modo normal.</li>
+      </ul><br>
+      <h3><strong>Código del sistema completo</strong></h3>
+
+      <pre><code>
+#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+#include "DHT.h"
+
+// ---------- CONFIGURACIÓN WIFI ----------
+const char* ssid     = "Ceibal-2.4GHz";
+const char* password = "";
+
+// ---------- TELEGRAM ----------
+String botToken = "8421682878:AAEq2uzHKsqD8j_M9_9O2wNVxgdP-vrIeP0";
+String chatID   = "6711269098";
+
+// ---------- SENSOR DHT ----------
+#define DHTPIN 4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// ---------- CONFIGURACION OLED SPI (7 pines) ----------
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_MOSI   23
+#define OLED_CLK    18
+#define OLED_DC     25
+#define OLED_CS     32
+#define OLED_RESET  21
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS);
+
+// ---------- ALERTAS ----------
+float tempNormalMin = 19.0;
+float tempNormalMax = 21.0;
+
+unsigned long intervaloNormal = 30UL * 60UL * 1000UL;  // 30 min
+unsigned long intervaloAlerta = 2UL * 60UL * 1000UL;   // 2 min
+
+unsigned long ultimoEnvio = 0;
+bool enAlerta = false;
+
+// ---------- FUNCIONES ----------
+void conectarWifi() {
+ Serial.print("Conectando a WiFi");
+ WiFi.begin(ssid, password);
+ while (WiFi.status() != WL_CONNECTED) {
+   delay(500);
+   Serial.print(".");
+ }
+ Serial.println("\nWiFi conectado");
+ Serial.print("IP: ");
+ Serial.println(WiFi.localIP());
+}
+
+void enviarTelegram(String mensaje) {
+ if (WiFi.status() != WL_CONNECTED) return;
+
+ HTTPClient http;
+ mensaje.replace(" ", "%20");
+ String url = "https://api.telegram.org/bot" + botToken +
+              "/sendMessage?chat_id=" + chatID + "&text=" + mensaje;
+
+ http.begin(url);
+ http.GET();
+ http.end();
+}
+
+// ---------- SETUP ----------
+void setup() {
+ Serial.begin(115200);
+
+ delay(500);
+ if(!display.begin(SSD1306_SWITCHCAPVCC)) {
+   Serial.println("Error iniciando OLED");
+   while(true);
+ }
+ display.clearDisplay();
+ display.setTextSize(2);
+ display.setTextColor(SSD1306_WHITE);
+ display.setCursor(0,10);
+ display.println("Iniciando...");
+ display.display();
+ delay(1500);
+
+ dht.begin();
+
+ conectarWifi();
+ delay(1000);
+
+ enviarTelegram("Sistema de monitoreo iniciado");
+}
+
+// ---------- LOOP PRINCIPAL ----------
+void loop() {
+ float temp = dht.readTemperature();
+ float hum = dht.readHumidity();
+
+ if (isnan(temp)) {
+   Serial.println("Error de lectura del DHT11");
+   delay(5000);
+   return;
+ }
+
+ unsigned long ahora = millis();
+ bool fueraDeRango = (temp > tempNormalMax || temp < tempNormalMin);
+
+ if (fueraDeRango && !enAlerta) {
+   enviarTelegram("ALERTA: Temp fuera de rango (" + String(temp, 1) + "°C)");
+   enAlerta = true;
+   ultimoEnvio = ahora;
+ }
+ else if (fueraDeRango && enAlerta && (ahora - ultimoEnvio >= intervaloAlerta)) {
+   enviarTelegram("Temp sigue fuera de rango: " + String(temp, 1) + "°C");
+   ultimoEnvio = ahora;
+ }
+ else if (!fueraDeRango && enAlerta) {
+   enviarTelegram("Temp normalizada (" + String(temp, 1) + "°C)");
+   enAlerta = false;
+   ultimoEnvio = ahora;
+ }
+ else if (!fueraDeRango && !enAlerta && (ahora - ultimoEnvio >= intervaloNormal)) {
+   enviarTelegram("Temp: " + String(temp, 1) + "°C | Hum: " + String(hum, 0) + "%");
+   ultimoEnvio = ahora;
+ }
+
+ Serial.printf("Temp: %.1f°C | Hum: %.0f%% | Estado: %s\n",
+               temp, hum, enAlerta ? "ALERTA" : "NORMAL");
+
+ display.clearDisplay();
+ display.setTextSize(2);
+ display.setTextColor(SSD1306_WHITE);
+
+ display.setCursor(0,10);
+ display.print("T: ");
+ display.print(temp, 1);
+ display.println("C");
+
+ display.setCursor(0,40);
+ display.print("H: ");
+ display.print(hum, 0);
+ display.println("%");
+
+ display.display();
+
+ delay(2000);
+}
+  </code></pre>
+    </section>
 
     <!-- Galería de Fotos del Proyecto -->
     <section class="galeria-fotos">
@@ -245,17 +408,22 @@
       <div class="caption" id="caption"></div>
     </div> <br>
     <section>
-  <h2>Mejoras prácticas que pueden incorporarse para aumentar la funcionalidad del sistema de monitoreo:</h2>
+      <h2>Mejoras prácticas que pueden incorporarse para aumentar la funcionalidad del sistema de monitoreo:</h2>
 
-  <ul>
-    <li><strong>Alertas por correo electrónico o SMS:</strong> Notificaciones adicionales además de Telegram para asegurar la recepción de alertas.</li>
-    <li><strong>Automatización de acciones:</strong> Activación automática de ventiladores o sistemas de refrigeración cuando la temperatura supere un umbral predefinido.</li>
-    <li><strong>Alarmas locales:</strong> Señales sonoras o luminosas en el lugar (buzzer o LEDs) para alertas inmediatas en caso de emergencia.</li>
-    <li><strong>Base de datos para históricos:</strong> Almacenamiento local o en la nube de registros de temperatura y humedad para análisis y generación de reportes.</li>
-    <li><strong>Soporte para múltiples sensores:</strong> Distribuir sensores en distintos puntos del cuarto (por ejemplo, por rack) para obtener un monitoreo más granular.</li>
-  </ul>
-</section><br>
-<section>
+      <ul>
+        <li><strong>Alertas por correo electrónico o SMS:</strong> Notificaciones adicionales además de Telegram para
+          asegurar la recepción de alertas.</li>
+        <li><strong>Automatización de acciones:</strong> Activación automática de ventiladores o sistemas de
+          refrigeración cuando la temperatura supere un umbral predefinido.</li>
+        <li><strong>Alarmas locales:</strong> Señales sonoras o luminosas en el lugar (buzzer o LEDs) para alertas
+          inmediatas en caso de emergencia.</li>
+        <li><strong>Base de datos para históricos:</strong> Almacenamiento local o en la nube de registros de
+          temperatura y humedad para análisis y generación de reportes.</li>
+        <li><strong>Soporte para múltiples sensores:</strong> Distribuir sensores en distintos puntos del cuarto (por
+          ejemplo, por rack) para obtener un monitoreo más granular.</li>
+      </ul>
+    </section><br>
+    <section>
       <h2>Información relacionada</h2>
 
       <p>
