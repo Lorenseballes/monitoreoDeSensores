@@ -1136,6 +1136,28 @@ footer p {
   }
 }
 
+/* Fotos de Diseño Mecánico */
+.fotos-diseno {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.fotos-diseno img {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.fotos-diseno img:hover {
+  transform: scale(1.05);
+}
+
 /* Estadísticas del Proyecto */
 .estadisticas {
   background: linear-gradient(135deg, #073452 0%, #0a4b70 100%);
